@@ -8,11 +8,15 @@ class EngineSession(
     private var isShutdown = false
 
     fun eval(input: String): JResult {
-        return getActiveEngineOrCreate().eval(input)
+        synchronized(lock) {
+            return getActiveEngineOrCreate().eval(input)
+        }
     }
 
     fun reset() {
-        getActiveEngineOrCreate().reset()
+        synchronized(lock) {
+            getActiveEngineOrCreate().reset()
+        }
     }
 
     fun shutdown() {
@@ -26,20 +30,19 @@ class EngineSession(
         }
     }
 
+    /** Must be called while holding [lock]. */
     private fun getActiveEngineOrCreate(): JEngine {
-        synchronized(lock) {
-            check(!isShutdown) {
-                "EngineSession has been shut down. Create a new session to continue."
-            }
+        check(!isShutdown) {
+            "EngineSession has been shut down. Create a new session to continue."
+        }
 
-            val engine = activeEngine
-            if (engine != null) {
-                return engine
-            }
+        val engine = activeEngine
+        if (engine != null) {
+            return engine
+        }
 
-            return engineFactory().also { createdEngine ->
-                activeEngine = createdEngine
-            }
+        return engineFactory().also { createdEngine ->
+            activeEngine = createdEngine
         }
     }
 }
