@@ -55,7 +55,7 @@ so that platform bindings can implement one consistent REPL runtime safely.
 
 ### References
 
-- PRD source: `features/J Playground PRD.md` Sections 3.1, 6.2, 6.3, 10, 11.
+- PRD source: `features/J Playground PRD.md` Sections 3.1, 7.2, 7.3, 11, 12.
 - Kotlin Multiplatform source sets: <https://kotlinlang.org/docs/multiplatform/multiplatform-discover-project>
 - Shared API boundaries: <https://kotlinlang.org/docs/multiplatform/multiplatform-connect-to-apis>
 - `expect/actual` guidance: <https://kotlinlang.org/docs/multiplatform/multiplatform-expect-actual>

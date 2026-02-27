@@ -50,7 +50,8 @@ so that I can evaluate expressions without external runtime installation.
 
 ### References
 
-- PRD source: `features/J Playground PRD.md` Sections 3.7, 6.1, 10.
+- PRD source: `features/J Playground PRD.md` Sections 3.7, 7.1, 11.
+- Technical design: `features/j-engine-interface-design.md` (J engine C API patterns, JVM/JNI binding approach).
 - KMP platform isolation via shared contracts: <https://kotlinlang.org/docs/multiplatform/multiplatform-connect-to-apis>
 - KMP source-set structure: <https://kotlinlang.org/docs/multiplatform/multiplatform-discover-project>
 - `expect/actual` pattern reference: <https://kotlinlang.org/docs/multiplatform/multiplatform-expect-actual>

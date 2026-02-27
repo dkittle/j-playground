@@ -56,7 +56,7 @@ so that I can immediately return to a clean working session.
 
 ### References
 
-- PRD source: `features/J Playground PRD.md` Sections 3.1, 3.5, 10, 11.
+- PRD source: `features/J Playground PRD.md` Sections 3.1, 3.5, 5 (NFR-05), 11, 12.
 - KMP interface isolation: <https://kotlinlang.org/docs/multiplatform/multiplatform-connect-to-apis>
 - KMP source-set organization: <https://kotlinlang.org/docs/multiplatform/multiplatform-discover-project>
 - KMP concurrency/runtime FAQ: <https://kotlinlang.org/docs/multiplatform/faq>

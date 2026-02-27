@@ -22,7 +22,11 @@ In scope:
 
 Out of scope:
 
-- Milestone 2+ work (multiline handling, truncation rendering details, tablet platform bring-up)
+- Milestone 2: Compose Desktop REPL (UI shell, input history, keyboard shortcuts, multi-line detection, styled error output, output truncation, monospaced font)
+- Milestone 3: Android tablet (JNI/NDK binding, touch input, on-screen keyboard)
+- Milestone 4: iOS tablet (static linking, Kotlin/Native C-interop)
+- Milestone 5: Polish & Learnability (syntax highlighting, dark mode, font config, prompt state indicators, session log, input history persistence)
+- Milestone 6: Productivity (script file loading, J help/NuVoc, plot/bitmap visualization)
 
 ## AC Coverage Matrix
 
@@ -43,6 +47,14 @@ Out of scope:
 | M1-AC-013 | TC-M1-015, TC-M1-017 |
 | M1-AC-014 | TC-M1-004 |
 | M1-AC-015 | TC-M1-018 |
+
+## NFR Coverage Matrix
+
+| NFR ID | Requirement | Test Case IDs |
+| --- | --- | --- |
+| NFR-03 | Errors don't crash app | TC-M1-006, TC-M1-011 |
+| NFR-04 | Recovers from errors without restart | TC-M1-011, TC-M1-012 |
+| NFR-05 | Reset reliability, no memory leaks | TC-M1-014, TC-M1-016 |
 
 ## Detailed Test Cases
 
@@ -126,6 +138,7 @@ Out of scope:
 
 - Story: M1.2
 - AC: M1-AC-005
+- NFR: NFR-03 (errors don't crash app)
 - Type: Integration (fault injection)
 - Coverage: Edge
 - Preconditions: Failure injection toggle for init/binding path.
@@ -198,6 +211,7 @@ Out of scope:
 
 - Story: M1.3
 - AC: M1-AC-010
+- NFR: NFR-03 (errors don't crash app), NFR-04 (recovers from errors without restart)
 - Type: Integration
 - Coverage: Core
 - Preconditions: Initialized session.
@@ -213,6 +227,7 @@ Out of scope:
 
 - Story: M1.3
 - AC: M1-AC-007, M1-AC-008, M1-AC-010
+- NFR: NFR-04 (recovers from errors without restart)
 - Type: Integration
 - Coverage: Partial success
 - Preconditions: Initialized session.
@@ -245,6 +260,7 @@ Out of scope:
 
 - Story: M1.4
 - AC: M1-AC-012
+- NFR: NFR-05 (reset reliability)
 - Type: Integration
 - Coverage: Core
 - Preconditions: Ability to define symbols before reset.
@@ -275,6 +291,7 @@ Out of scope:
 
 - Story: M1.4
 - AC: M1-AC-011, M1-AC-012
+- NFR: NFR-05 (reset reliability, no memory leaks)
 - Type: Integration
 - Coverage: Edge
 - Preconditions: Running session.

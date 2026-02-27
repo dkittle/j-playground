@@ -59,7 +59,7 @@ so that I can use the app as a basic interactive REPL in Milestone 01.
 
 ### References
 
-- PRD source: `features/J Playground PRD.md` Sections 3.1, 3.4, 3.6, 10.
+- PRD source: `features/J Playground PRD.md` Sections 3.1, 3.4, 3.6, 5 (NFR-03, NFR-04), 11.
 - KMP shared/platform boundaries: <https://kotlinlang.org/docs/multiplatform/multiplatform-connect-to-apis>
 - KMP concurrency guidance (coroutines/async patterns): <https://kotlinlang.org/docs/multiplatform/faq>
 - KMP source-set organization: <https://kotlinlang.org/docs/multiplatform/multiplatform-discover-project>

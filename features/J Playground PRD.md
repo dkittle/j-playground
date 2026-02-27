@@ -123,21 +123,83 @@ Reset button must:
 
 ---
 
-# 4. Non-Goals (Out of Scope for v1)
+## 3.8 Input History
 
-- Syntax highlighting
-- File-based workspace
-- Addon/package support
-- AI assistance
-- Execution interrupt
-- Multiple interpreter tabs
-- Session persistence
-- IDE-level navigation features
-- Terminal emulation
+Users must be able to recall and re-execute previous inputs without retyping.
+
+Requirements:
+
+- Up arrow recalls previous input, down arrow recalls next input
+- History navigates through all inputs submitted in the current session
+- Selecting a history entry replaces the current input field contents
+- History is not persisted across app restarts in v1
+- Minimum 100 entries retained per session
 
 ---
 
-# 5. UI Requirements
+## 3.9 Keyboard Shortcuts
+
+Physical keyboard users must have efficient access to core operations.
+
+Requirements:
+
+- Enter executes input (when block is complete)
+- Shift+Enter inserts newline
+- Up/Down arrow navigates input history (when cursor is at first/last line)
+- Platform-standard copy/paste (Cmd+C/V on macOS, Ctrl+C/V elsewhere)
+- Keyboard shortcut for reset (platform-appropriate modifier + R)
+- Font size adjustment (platform-appropriate modifier + Plus/Minus)
+
+---
+
+# 4. Non-Goals (Out of Scope for v1)
+
+## Planned for Future Milestones
+
+These features are validated by existing J tools (j901, QTIDE) but excluded from v1 to maintain scope discipline:
+
+- Syntax highlighting (both j901 and QTIDE have this — high user expectation)
+- Dark mode / theming
+- Font size control beyond keyboard shortcuts
+- Script file loading and execution
+- Session log / transaction history
+- Input history persistence across restarts
+- In-app J help / NuVoc reference
+- Prompt state indicators (idle vs. continuation vs. debug)
+- Visualization (plots, bitmap/matrix display)
+- Execution interrupt / cancel
+
+## Permanently Out of Scope
+
+These are IDE-level features that conflict with j-playground's lightweight REPL positioning:
+
+- Full project management (QTIDE territory)
+- WD widget framework / GUI builder (QTIDE-specific)
+- Addon/package manager
+- AI assistance
+- Multiple interpreter tabs
+- Terminal emulation
+- Collaborative editing
+- Cloud-based J execution
+
+---
+
+# 5. Non-Functional Requirements
+
+| ID | Category | Requirement | Measurement Method | Source |
+|----|----------|-------------|--------------------|--------|
+| NFR-01 | Performance | App launches to interactive REPL in under 3 seconds | Cold start to cursor active in input field, on target hardware | j901 NFR-P1, QTIDE NFR-01 |
+| NFR-02 | Performance | Basic J expressions evaluate in under 100ms | Time from submit to result display for `+/ i.100` | j901 NFR-P2 |
+| NFR-03 | Reliability | 100% of J engine errors surface as styled output; 0% cause app crashes | Execute error-producing expressions (`1%0`, `'abc'+1`, stack overflow) and confirm app stability | j901 NFR-R1, QTIDE NFR-11 |
+| NFR-04 | Reliability | App recovers from all J engine errors without requiring restart | Execute error-producing then valid expressions in sequence; confirm correct results | j901 NFR-R3 |
+| NFR-05 | Reliability | Reset reliably destroys and reinitializes engine with no memory leaks | Repeat reset cycle 50 times; monitor process memory for growth | Original PRD section 3.5, 9 |
+| NFR-06 | Availability | App is fully functional without network connectivity | All features operate with airplane mode enabled | j901 NFR-I2 |
+| NFR-07 | Compatibility | App renders and functions correctly on all target platforms (JVM desktop, Android tablet, iOS tablet) | Platform-specific test pass on each target | j901 NFR-C2, QTIDE NFR-06 |
+| NFR-08 | Usability | All core REPL operations accessible via keyboard shortcuts on devices with physical keyboards | Keyboard shortcut audit against core operations list | j901 US-S3, QTIDE NFR-13 |
+
+---
+
+# 6. UI Requirements
 
 Built with Compose Multiplatform.
 
@@ -163,9 +225,9 @@ Built with Compose Multiplatform.
 - Monospaced font throughout REPL area
 
 ---
-# 6. Architecture
+# 7. Architecture
 
-## 6.1 Module Structure
+## 7.1 Module Structure
 :core
    JEngine interface
    JResult model
@@ -183,7 +245,7 @@ Built with Compose Multiplatform.
 
 ---
 
-## 6.2 JEngine Interface
+## 7.2 JEngine Interface
 
 ```kotlin
 interface JEngine {
@@ -193,7 +255,7 @@ interface JEngine {
 }
 ```
 
-## 6.3 JResult Model
+## 7.3 JResult Model
 
 ```
 data class JResult(
@@ -202,7 +264,7 @@ data class JResult(
 )
 ```
 
-## 6.4 Threading Rules
+## 7.4 Threading Rules
 
 - Eval runs in background dispatcher    
 - All UI state updated via Compose state
@@ -211,7 +273,7 @@ data class JResult(
 
 ---
 
-# 7. Output Truncation Policy
+# 8. Output Truncation Policy
 
 If output length > 2000 characters:
 
@@ -224,7 +286,7 @@ Future versions may allow expandable output blocks.
 
 ---
 
-# 8. Platform Constraints
+# 9. Platform Constraints
 
 ## iOS
 
@@ -240,7 +302,7 @@ Future versions may allow expandable output blocks.
 - Document supported OS versions
 
 ---
-# **9. Technical Risks**
+# **10. Technical Risks**
 
 ## **High Risk**
 
@@ -260,56 +322,76 @@ Future versions may allow expandable output blocks.
 
 ---
 
-# **10. Roadmap**
+# **11. Roadmap**
 
 ## **Milestone 1 — Engine Proof of Concept**
 
 - Bind J engine on JVM
 - Eval simple expressions
 - Reset working
-    
+
 ## **Milestone 2 — Compose Desktop REPL**
 
-- UI shell
-- Multi-line support
-- Styled errors
-- Truncation logic
+- UI shell with REPL output scroll area and multi-line input
+- Input history (up/down arrow navigation)
+- Keyboard shortcuts (execute, reset, history, copy/paste, font size)
+- Multi-line explicit definition detection and buffered execution
+- Styled error output (visually distinct from normal output)
+- Output truncation at 2,000 characters with indicator
+- Monospaced font throughout REPL area
 
 ## **Milestone 3 — Android Tablet**
 
-- Native binding    
-- UI adjustments for touch
-    
+- Native binding via JNI/NDK
+- UI adjustments for touch input
+- On-screen keyboard considerations for J special characters
+
 ## **Milestone 4 — iOS Tablet**
 
-- Static linking
-- Memory validation
+- Static linking of J engine
+- Memory lifecycle validation
+- Kotlin/Native C-interop verification
+
+## **Milestone 5 — Polish & Learnability**
+
+Validated by j901 and QTIDE user patterns:
+
+- Syntax highlighting for J tokens (verbs, nouns, adverbs, conjunctions, strings, numbers, comments)
+- Dark mode / theming support
+- Font family and size configuration
+- Prompt state indicators (idle, continuation, debug)
+- Session log / transaction history view
+- Input history persistence across restarts
+
+## **Milestone 6 — Productivity**
+
+- Script file loading and execution (.ijs files)
+- In-app J help / NuVoc vocabulary reference
+- Visualization: plot output rendering
+- Visualization: bitmap/matrix display (viewmat)
     
 
 ---
 
-# **11. Definition of Done for v1**
+# **12. Definition of Done for v1**
 
 - REPL works identically on desktop and tablet
-    
 - Multi-line definitions fully functional
-    
-- Reset reliable
-    
-- Output truncation enforced
-    
-- Errors styled distinctly
-    
-- No interpreter leaks across resets
-    
-- J runtime fully bundled
-    
+- Input history navigable via up/down arrow
+- Keyboard shortcuts functional for all core operations
+- Reset reliable with no interpreter leaks
+- Output truncation enforced at 2,000 characters
+- Errors styled distinctly from normal output
+- Engine errors never crash app (NFR-03)
+- App launches to interactive REPL in under 3 seconds (NFR-01)
+- Fully functional offline (NFR-06)
+- J runtime fully bundled per platform
 - Open-source repo structured and documented
     
 
 ---
 
-# **12. Open-Source Positioning**
+# **13. Open-Source Positioning**
 
   
 
@@ -322,5 +404,13 @@ Project principles:
 - Platform parity
     
 - Strict scope discipline
-    
+
 - Contributors welcome in engine layer and UI layer separately
+
+---
+
+# **14. References**
+
+- `features/other/prd-j901.md` — j901 iOS IDE PRD (reverse-engineered). Source for validated mobile/tablet user needs.
+- `features/other/prd-qtide.md` — QTIDE desktop IDE PRD (reverse-engineered). Source for validated desktop user needs.
+- `features/j-engine-interface-design.md` — Technical design: how j901 and QTIDE interface with the J engine, mapped to j-playground's KMP architecture.

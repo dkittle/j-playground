@@ -18,11 +18,12 @@ Milestone 01 scope is limited to:
 | 3.1 Core Feature: Stateful REPL | Single interpreter per session; no persistence across restarts | M1-AC-002, M1-AC-003 |
 | 3.5 Reset Behavior | Destroy/reinitialize interpreter; clear REPL state | M1-AC-011, M1-AC-012, M1-AC-013 |
 | 3.6 Execution Model | Serialized eval; off-UI-thread execution | M1-AC-008, M1-AC-009 |
-| 6.2 JEngine Interface | Shared engine contract (`eval/reset/shutdown`) | M1-AC-001 |
-| 6.3 JResult Model | Result contract for output/error signaling | M1-AC-001, M1-AC-010 |
-| 6.4 Threading Rules | Single-threaded engine access; non-blocking UI | M1-AC-008, M1-AC-009 |
-| 10 `Milestone 1 — Engine Proof of Concept` | Bind JVM engine, evaluate simple expressions, reset working | M1-AC-004 through M1-AC-013 |
-| 11 Definition of Done (v1, relevant subset) | Reliable reset, no interpreter leaks, stable error handling | M1-AC-010, M1-AC-012, M1-AC-014 |
+| 5 Non-Functional Requirements (NFR-03, NFR-04, NFR-05) | Error resilience; recovery after errors; reset reliability | M1-AC-005, M1-AC-010, M1-AC-011, M1-AC-012 |
+| 7.2 JEngine Interface | Shared engine contract (`eval/reset/shutdown`) | M1-AC-001 |
+| 7.3 JResult Model | Result contract for output/error signaling | M1-AC-001, M1-AC-010 |
+| 7.4 Threading Rules | Single-threaded engine access; non-blocking UI | M1-AC-008, M1-AC-009 |
+| 11 `Milestone 1 — Engine Proof of Concept` | Bind JVM engine, evaluate simple expressions, reset working | M1-AC-004 through M1-AC-013 |
+| 12 Definition of Done (v1, relevant subset) | Reliable reset, no interpreter leaks, stable error handling | M1-AC-010, M1-AC-012, M1-AC-014 |
 
 ## Milestone 01 AC List
 
@@ -81,7 +82,8 @@ Milestone 01 scope is limited to:
 
 ## Source References
 
-- PRD: `features/J Playground PRD.md` (Sections 3.1, 3.5, 3.6, 6.2, 6.3, 6.4, 10, 11)
+- PRD: `features/J Playground PRD.md` (Sections 3.1, 3.5, 3.6, 5, 7.2, 7.3, 7.4, 11, 12)
+- Technical design: `features/j-engine-interface-design.md`
 - Kotlin Multiplatform source sets: <https://kotlinlang.org/docs/multiplatform/multiplatform-discover-project>
 - Kotlin `expect/actual`: <https://kotlinlang.org/docs/multiplatform/multiplatform-expect-actual>
 - Shared interfaces and platform implementations: <https://kotlinlang.org/docs/multiplatform/multiplatform-connect-to-apis>
