@@ -1,0 +1,10 @@
+/.agents/
+/.claude/
+/.gradle/
+/.idea/
+/.kotlin/
+/_bmad/
+/_bmad-output/
+/build/
+/.DS_Store
+/composeApp/build
