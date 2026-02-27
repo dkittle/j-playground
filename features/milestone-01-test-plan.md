@@ -29,8 +29,8 @@ Primary artifacts:
 | Environment | Purpose |
 | --- | --- |
 | Local JVM desktop run (`./gradlew :composeApp:run`) | Manual behavior validation and UI responsiveness checks |
-| Automated verification (`./gradlew :composeApp:check`) | Unit/integration regression baseline |
-| CI JVM pipeline (if configured) | Reproducible release-candidate validation |
+| Automated verification (`./gradlew :composeApp:jvmTest`) | Unit/integration regression baseline |
+| CI JVM pipeline (if configured; runs `:composeApp:compileKotlinJvm :composeApp:jvmTest`) | Reproducible release-candidate validation |
 
 ## Entry Criteria
 
@@ -122,7 +122,7 @@ A partial success test fails when degradation causes crash, deadlock, corrupted 
 - All edge/partial tests are either pass or have documented waiver with explicit risk acceptance:
   - `TC-M1-004`, `TC-M1-006`, `TC-M1-009`, `TC-M1-012`, `TC-M1-016`, `TC-M1-017`
 - Coverage audit test `TC-M1-018` passes and evidence is included in release report.
-- `./gradlew :composeApp:check` is green for release candidate commit.
+- `./gradlew :composeApp:jvmTest` is green for release candidate commit.
 - No unresolved crash-class defects remain open for Milestone 01 scope.
 
 ## Waiver Rules
